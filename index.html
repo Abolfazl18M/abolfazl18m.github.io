@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Social Links</title>
+  <!-- Google Font -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap"></noscript>
+  <!-- AOS (Scroll Animation) -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-family: 'Vazirmatn', Tahoma, sans-serif;
+      color: white;
+      background: transparent;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      z-index: -2;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      box-sizing: border-box;
+      padding: 0 20px;
+    }
+
+    .content-wrapper {
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      transform: translateY(0);
+      transition: transform 0.3s ease-out;
+    }
+
+    body.scrolled .content-wrapper {
+      transform: translateY(-20px);
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 700;
+      white-space: nowrap;
+      margin: 0 0 20px 0;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      animation: textGlow 2s infinite alternate;
+    }
+
+    @keyframes textGlow {
+      0% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
+      100% { text-shadow: 0 0 15px rgba(255, 255, 255, 0.9); }
+    }
+
+    p.subtitle {
+      font-size: 14px;
+      opacity: 0.8;
+      margin: 0 0 40px 0;
+      text-align: center;
+    }
+
+    .wave {
+      display: inline-block;
+      animation: wave-animation 2s infinite;
+      transform-origin: 70% 70%;
+      will-change: transform;
+    }
+
+    @keyframes wave-animation {
+      0% { transform: rotate(0deg); }
+      10% { transform: rotate(14deg); }
+      20% { transform: rotate(-8deg); }
+      30% { transform: rotate(14deg); }
+      40% { transform: rotate(-4deg); }
+      50% { transform: rotate(10deg); }
+      60% { transform: rotate(0deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    .links-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    a {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 220px;
+      font-size: 16px;
+      z-index: 1;
+      transition: transform 0.3s, box-shadow 0.3s;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      will-change: transform, box-shadow;
+    }
+
+    a:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+
+    a:active {
+      transform: scale(0.98);
+    }
+
+    a::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        transparent 100%
+      );
+      transition: left 0.7s;
+    }
+
+    a:hover::before {
+      left: 150%;
+    }
+
+    a::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      white-space: nowrap;
+    }
+
+    a:hover::after {
+      opacity: 1;
+    }
+
+    img.icon {
+      width: 20px;
+      height: 20px;
+      z-index: 2;
+    }
+
+    footer {
+      font-size: 12px;
+      opacity: 0.7;
+      margin-top: auto;
+      padding-bottom: 20px;
+    }
+
+    #theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 100;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      transform-style: preserve-3d;
+      transition: transform 0.3s;
+    }
+
+    #theme-toggle:hover {
+      transform: rotateX(10deg) rotateY(5deg);
+    }
+
+    /* Light Mode */
+    body.light-mode {
+      color: #333;
+    }
+    body.light-mode::before {
+      background: rgba(255, 255, 255, 0.7);
+    }
+    body.light-mode #particles-js {
+      background: #f0f0f0;
+    }
+    body.light-mode a {
+      color: #333;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    body.light-mode #theme-toggle {
+      background: rgba(0, 0, 0, 0.1);
+      color: #333;
+    }
+
+    /* Glowing Footer */
+    .glowing-footer {
+      position: relative;
+      padding: 10px 20px;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+      animation: pulse 2s infinite alternate;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: bold;
+      will-change: transform;
+    }
+
+    .glowing-footer::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, 
+        #ff0000, #ff7300, #fffb00, #48ff00, 
+        #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+      background-size: 400%;
+      border-radius: 50px;
+      z-index: -1;
+      opacity: 0;
+      transition: 0.5s;
+      animation: animate 20s linear infinite;
+    }
+
+    .glowing-footer:hover::before {
+      opacity: 0.3;
+    }
+
+    @keyframes animate {
+      0% { background-position: 0 0; }
+      50% { background-position: 300% 0; }
+      100% { background-position: 0 0; }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.05); }
+    }
+
+    body.light-mode .glowing-footer {
+      background: rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 18px;
+      }
+      .content-wrapper {
+        padding: 10px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button id="theme-toggle">Toggle Theme</button>
+  <div id="particles-js"></div>
+
+  <div class="content-wrapper">
+    <h1 data-aos="fade-down">
+      Welcome to Abolfazl's social media links! <span class="wave">👋</span>
+    </h1>
+    <p class="subtitle" data-aos="fade-down" data-aos-delay="200">Follow me for updates and more!</p>
+
+    <div class="links-container">
+      <a href="https://t.me/i_Abolfazl25" target="_blank" rel="noopener noreferrer nofollow" data-aos="fade-up" data-tooltip="پیام من در تلگرام!">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" class="icon" loading="lazy" />
+        Telegram
+      </a>
+
+      <a href="https://wa.me/qr/Q3JCQVNA2OHQM1" target="_blank" rel="noopener noreferrer nofollow" data-aos="fade-up" data-aos-delay="100" data-tooltip="چت در واتس‌اپ!">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="icon" loading="lazy" />
+        WhatsApp
+      </a>
+
+      <a href="https://www.instagram.com/abolfazl_mahmoodi17" target="_blank" rel="noopener noreferrer nofollow" data-aos="fade-up" data-aos-delay="200" data-tooltip="اینستاگرام من!">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram" class="icon" loading="lazy" />
+        Instagram
+      </a>
+    </div>
+
+    <footer data-aos="fade-up" data-aos-delay="500" class="glowing-footer">
+      © 2025 . All rights reserved.
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js" defer></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+  <script>
+    // Particles.js Config
+    document.addEventListener('DOMContentLoaded', function() {
+      particlesJS("particles-js", {
+        "particles": {
+          "number": { "value": 100 },
+          "color": { "value": "#ffffff" },
+          "shape": { "type": "circle" },
+          "opacity": { "value": 0.5, "random": true },
+          "size": { "value": 4, "random": true },
+          "line_linked": {
+            "enable": true,
+            "distance": 150,
+            "color": "#ffffff",
+            "opacity": 0.2,
+            "width": 1
+          },
+          "move": {
+            "enable": true,
+            "speed": 2,
+            "direction": "none",
+            "random": true,
+            "straight": false,
+            "out_mode": "out"
+          }
+        },
+        "interactivity": {
+          "detect_on": "canvas",
+          "events": {
+            "onhover": { "enable": true, "mode": "bubble" },
+            "onclick": { "enable": true, "mode": "push" }
+          },
+          "modes": {
+            "bubble": { "distance": 200, "size": 6, "duration": 2 },
+            "push": { "particles_nb": 4 }
+          }
+        }
+      });
+
+      // AOS Init
+      AOS.init({
+        duration: 800,
+        easing: 'ease-out-quad',
+        once: true
+      });
+
+      // Theme Toggle
+      document.getElementById('theme-toggle').addEventListener('click', () => {
+        document.body.classList.toggle('light-mode');
+      });
+
+      // Text Glow Animation
+      const title = document.querySelector('h1');
+      const text = title.innerText;
+      title.innerText = '';
+
+      let i = 0;
+      function typeWriter() {
+        if (i < text.length) {
+          title.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(typeWriter, 50);
+        }
+      }
+      setTimeout(typeWriter, 1000);
+
+      // Parallax Effect
+      window.addEventListener('scroll', () => {
+        document.body.classList.toggle('scrolled', window.scrollY > 50);
+      });
+    });
+  </script>
+</body>
+</html>
